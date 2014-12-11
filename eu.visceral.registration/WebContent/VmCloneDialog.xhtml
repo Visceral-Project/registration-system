@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Virtual Machine Dialog</h2>
+            </t:div>
+            <h:form styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <h:outputLabel styleClass="labelClass" value="Would you like a new Virtual Machine or a clone of the old one?"></h:outputLabel>
+                <h:panelGrid columns="2" style="margin: auto;">
+                    <h:commandButton value="Yes new one" action="#{dashboardBean.disassociateVM()}" styleClass="submit"></h:commandButton>
+                    <h:commandButton value="No the same" action="#{dashboardBean.cloneVM()}" styleClass="submit"></h:commandButton>
+                </h:panelGrid>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</f:view>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Login</h2>
+            </t:div>
+            <t:div style="display: table;margin: auto;">
+                <h:form styleClass="viewContent">
+                    <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="email" value="Email :"></h:outputLabel>
+                        <h:inputText id="email" value="#{loginBean.email}" required="true" requiredMessage="Please Enter Email" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="password" value="Password :"></h:outputLabel>
+                        <h:inputSecret id="password" value="#{loginBean.password}" required="true" requiredMessage="Please Enter Password!" styleClass="field"></h:inputSecret>
+
+                        <h:commandButton value="Login" action="#{loginBean.logUserIn()}" styleClass="submit"></h:commandButton>
+                        <h:button value="Forgot Password" outcome="forgot_password" styleClass="submit"></h:button>
+
+                        <h:button value="Register" outcome="not_registered" styleClass="submit"></h:button>
+                        <h:button value="Global Leaderboard" outcome="leaderboard" styleClass="submit"></h:button>
+                    </h:panelGrid>
+                </h:form>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{dashboardBean.init()}
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Dashboard</h2>
+            </t:div>
+            <h:form styleClass="viewContent" enctype="multipart/form-data">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <t:div rendered="#{!dashboardBean.copyright_signed}">
+                    <h:panelGrid columns="1" styleClass="container">
+                        <h:commandLink value="First download the PDF" action="#{dashboardBean.downloadFile('agreement.pdf')}" target="_blank" styleClass="submit"></h:commandLink>
+                    </h:panelGrid>
+                    <h:outputLabel styleClass="labelClass">In order to activate your account you will have to download the agreement, sign it and then upload it using the Choose File button.</h:outputLabel>
+                    <h:panelGrid columns="2">
+                        <t:inputFileUpload value="#{dashboardBean.uploadedFile}" styleClass="uploadFile" />
+                        <h:commandButton type="submit" value="Upload" action="#{dashboardBean.upload()}" styleClass="submit"></h:commandButton>
+                    </h:panelGrid>
+                </t:div>
+                <t:div rendered="#{dashboardBean.copyright_signed}">
+                    <h:panelGrid columns="2" styleClass="centered setBorderOnCell">
+                        <h:panelGrid columns="3" style="margin: auto;">
+                            <h:outputLabel value="Choose Benchmark :"></h:outputLabel>
+                            <h:selectOneMenu value="#{dashboardBean.compId}">
+                                <f:selectItems value="#{dashboardBean.registeredCompetitions}" var="c" itemLabel="#{c.name}" itemValue="#{c.competitionid}" />
+                            </h:selectOneMenu>
+                            <h:commandButton value="Reload Data" action="#{dashboardBean.reloadInfo()}" styleClass="submit slim"></h:commandButton>
+                        </h:panelGrid>
+                        <h:outputLabel value="Your VM"></h:outputLabel>
+
+                        <t:div>
+                            <h:panelGrid styleClass="wrapBigEmail" columns="2">
+                                <h:outputLabel value="Your Email"></h:outputLabel>
+                                <h:outputLabel value="Your signed agreement"></h:outputLabel>
+
+                                <h:outputText value="#{dashboardBean.email}"></h:outputText>
+                                <h:outputLink value="/register/Download.xhtml?pdf=#{dashboardBean.URLencode(dashboardBean.email)}.pdf" target="_blank" styleClass="submit">Download</h:outputLink>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" styleClass="centered">
+                                <h:outputLabel rendered="#{dashboardBean.isCompetitionClosed(dashboardBean.competition)}" value="Benchmark closed"></h:outputLabel>
+                                <t:div rendered="#{!dashboardBean.isCompetitionClosed(dashboardBean.competition)}">
+                                    <h:outputLabel rendered="#{dashboardBean.hasCompetitionsStarted()}" value="Benchmark ends in #{dashboardBean.daysToDisplay} days"></h:outputLabel>
+                                    <h:outputLabel rendered="#{!dashboardBean.hasCompetitionsStarted()}" value="Benchmark starts in #{dashboardBean.daysToDisplay} days"></h:outputLabel>
+                                </t:div>
+                                <h:outputLabel value="Your unique ID is"></h:outputLabel>
+                                <t:popup styleClass="popup_table" closePopupOnExitingElement="true" closePopupOnExitingPopup="true" displayAtDistanceX="0" displayAtDistanceY="0">
+                                    <t:div>
+                                        <h:outputText value="#{fn:substring(dashboardBean.uniqueID, 0, 6)}" />
+                                    </t:div>
+                                    <f:facet name="popup">
+                                        <h:panelGroup>
+                                            <h:panelGrid columns="1" styleClass="table table-striped">
+                                                <h:outputLabel value="Unique ID info"></h:outputLabel>
+                                                <h:outputLabel styleClass="idInfo" value="Use this ID when you commit your results back to us. It will help us identify your work."></h:outputLabel>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </f:facet>
+                                </t:popup>
+                                <h:panelGrid columns="1" styleClass="centered">
+                                    <h:button value="View Benchmark Files" outcome="benchmarkFiles" styleClass="submit"></h:button>
+                                    <h:panelGrid columns="2" styleClass="centered">
+                                        <h:button value="View Your Results" outcome="results" styleClass="submit"></h:button>
+                                        <h:button value="Global Leaderboard" outcome="leaderboard" styleClass="submit"></h:button>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </t:div>
+                        <t:div rendered="#{dashboardBean.hasVM and !dashboardBean.VM_submitted}">
+                            <h:outputLink rendered="false" value="http://fast.hevs.ch/temp/AzureCloudGuidelinesBenchmark1.pdf" target="_blank" styleClass="links">Azure Cloud Guidelines</h:outputLink>
+                            <h:outputLink rendered="false" value="/register/javax.faces.resource/trainingseturls.txt?ln=files" target="_blank" styleClass="links">Visceral training set file list</h:outputLink>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="DNS name : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_DNSname}"></h:outputText>
+
+                                <h:outputLabel value="Username : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_username}"></h:outputText>
+
+                                <h:outputLabel value="Password : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_password}"></h:outputText>
+
+                                <h:outputLabel value="OS : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_OS}"></h:outputText>
+
+                                <h:outputLabel value="Protocol : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_protocol}"></h:outputText>
+
+                                <h:outputLabel value="Port : "></h:outputLabel>
+                                <h:outputText value="#{dashboardBean.VM_port}"></h:outputText>
+
+                                <h:outputLabel value="VM Status : "></h:outputLabel>
+                                <h:outputText rendered="#{dashboardBean.VM_status}" value="Started"></h:outputText>
+                                <h:outputText rendered="#{!dashboardBean.VM_status}" value="Stopped"></h:outputText>
+
+                                <h:outputLabel value="Shutdown on the weekends : "></h:outputLabel>
+                                <h:commandLink rendered="#{dashboardBean.VM_exclusion_status}" value="Exclude"
+                                    onclick="if (confirm('If you press OK this VM is not going to be shutdown during the weekends.')) return true; else return false;" action="#{dashboardBean.toggleVmExclusion()}"
+                                    styleClass="submit slim"></h:commandLink>
+                                <h:commandLink rendered="#{!dashboardBean.VM_exclusion_status}" value="Include"
+                                    onclick="if (confirm('If you press OK this VM is going to be shutdown during the weekends.')) return true; else return false;" action="#{dashboardBean.toggleVmExclusion()}"
+                                    styleClass="submit slim"></h:commandLink>
+                            </h:panelGrid>
+                            <h:panelGrid styleClass="centered" columns="2">
+                                <h:commandLink rendered="#{dashboardBean.VM_status}" value="Stop VM"
+                                    onclick="if (confirm('If you press OK this VM is going to shutdown. Give the Virtual Machine a bit of time to shutdown and then refresh to check the status.')) return true; else return false;"
+                                    action="#{dashboardBean.shutdownVm()}" styleClass="submit slim"></h:commandLink>
+                                <h:commandLink rendered="#{!dashboardBean.VM_status}" value="Start VM"
+                                    onclick="if (confirm('If you press OK this VM is going to boot up. Give the Virtual Machine a bit of time to boot up and then refresh to check the status.')) return true; else return false;"
+                                    action="#{dashboardBean.startVm()}" styleClass="submit slim"></h:commandLink>
+                                <h:commandLink value="Submit VM"
+                                    onclick="if (confirm('Please bear in mind that if you press OK this VM is going to be submitted back to the Visceral Project and it will become inaccessible for you.')) return true; else return false;"
+                                    action="#{dashboardBean.submitVm()}" styleClass="submit slim"></h:commandLink>
+                            </h:panelGrid>
+                            <h:outputLink rendered="false" value="http://goo.gl/KyKMnp" target="_blank" styleClass="links" style="color:#e74c3c;margin-top: 4px;">Download the latest evaluation tool</h:outputLink>
+                        </t:div>
+                        <h:outputText rendered="#{!dashboardBean.hasVM and !dashboardBean.VM_submitted}" value="Unassigned"></h:outputText>
+                        <h:outputText rendered="#{dashboardBean.hasVM and dashboardBean.VM_submitted}" value="Virtual Machine submitted"></h:outputText>
+                    </h:panelGrid>
+                    <h:panelGrid rendered="#{dashboardBean.hasVM and !dashboardBean.VM_submitted}" styleClass="centered tableBorder" columns="1">
+                        <h:outputLabel value="Info"></h:outputLabel>
+                        <h:outputText value="For key usage read the Azure Cloud Guidelines"></h:outputText>
+
+                        <h:outputLabel value="Data Key"></h:outputLabel>
+                        <h:outputText value="The data key for each Benchmark is on the Benchmark Files"></h:outputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" styleClass="centered">
+                        <h:outputLabel for="firstname" value="First name :"></h:outputLabel>
+                        <h:inputText id="firstname" value="#{dashboardBean.firstname}" required="true" requiredMessage="Please enter first name!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="lastname" value="Last name :"></h:outputLabel>
+                        <h:inputText id="lastname" value="#{dashboardBean.lastname}" required="true" requiredMessage="Please enter last name!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="affiliation" value="Affiliation :"></h:outputLabel>
+                        <h:inputText id="affiliation" value="#{dashboardBean.affiliation}" required="true" requiredMessage="Please enter affiliation!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="street" value="Street Name :"></h:outputLabel>
+                        <h:inputText id="street" value="#{dashboardBean.street}" required="true" requiredMessage="Please enter street name!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="zip" value="Zip :"></h:outputLabel>
+                        <h:inputText id="zip" value="#{dashboardBean.zip}" required="true" requiredMessage="Please enter zip code!" validatorMessage="Zip code must be between 4 and 10 digits"
+                            converterMessage="Zip code must be numeric" styleClass="field">
+                            <f:validateLength minimum="4" maximum="10"></f:validateLength>
+                            <f:converter converterId="javax.faces.Integer"></f:converter>
+                        </h:inputText>
+
+                        <h:outputLabel for="city" value="City :"></h:outputLabel>
+                        <h:inputText id="city" value="#{dashboardBean.city}" required="true" requiredMessage="Please enter city!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="country" value="Country :"></h:outputLabel>
+                        <h:inputText id="country" value="#{dashboardBean.country}" required="true" requiredMessage="Please select country!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="phone" value="Phone :"></h:outputLabel>
+                        <h:inputText id="phone" value="#{dashboardBean.phone}" required="true" requiredMessage="Please enter phone!" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="competitions" value="Available Benchmarks :"></h:outputLabel>
+                        <h:selectManyMenu id="competitions" class="competitions" value="#{dashboardBean.selectedCompetitions}">
+                            <f:selectItems value="#{dashboardBean.competitions}" var="c" itemLabel="#{c.name}" itemValue="#{c.name}"
+                                itemDisabled="#{dashboardBean.isCompetitionClosed(c) || dashboardBean.isAlreadyRegistered(c)}" />
+                        </h:selectManyMenu>
+                    </h:panelGrid>
+                    <h:commandButton type="submit" value="Save changed user data" action="#{dashboardBean.changeUserInfo()}" styleClass="submit"></h:commandButton>
+                </t:div>
+                <h:panelGrid columns="2">
+                    <h:commandButton type="submit" value="Logout" action="#{dashboardBean.logUserOut()}" styleClass="submit"></h:commandButton>
+                    <h:commandButton rendered="false" type="submit" value="Delete Account" onclick="if (confirm('Are you sure you want to delete your account?')) return true; else return false;"
+                        action="#{dashboardBean.deleteUser()}" styleClass="submit"></h:commandButton>
+                </h:panelGrid>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</f:view>

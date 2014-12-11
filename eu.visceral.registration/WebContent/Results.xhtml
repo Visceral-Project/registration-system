@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{resultsBean.init()}
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Evaluation Results</h2>
+            </t:div>
+            <t:div styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <h:button style="display: table;margin: auto;margin-top: 10px;" value="Go to Dashboard" outcome="goToDashboard" styleClass="submit"></h:button>
+                <t:div rendered="#{resultsBean.results}" style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;">
+                    <h:form>
+                        <h:panelGrid columns="1" style="margin: auto;">
+                            <h:outputLabel style="text-align:center;" value="Please Select"></h:outputLabel>
+                            <t:div>
+                                <h:panelGrid columns="4">
+                                    <h:selectOneMenu value="#{resultsBean.modality}" required="true" requiredMessage="Please choose a modality">
+                                        <f:selectItem itemLabel="Modality" noSelectionOption="true" />
+                                        <f:selectItems value="#{resultsBean.modalities}" var="modality" itemLabel="#{modality}" itemValue="#{modality}" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu value="#{resultsBean.region}" required="true" requiredMessage="Please choose a region">
+                                        <f:selectItem itemLabel="Region" noSelectionOption="true" />
+                                        <f:selectItems value="#{resultsBean.regions}" var="region" itemLabel="#{region}" itemValue="#{region}" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu value="#{resultsBean.configuration}" required="true" requiredMessage="Please choose a configuration">
+                                        <f:selectItem itemLabel="Configuration" noSelectionOption="true" />
+                                        <f:selectItems value="#{resultsBean.configurations}" var="configuration" itemLabel="#{configuration}" itemValue="#{configuration}" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu value="#{resultsBean.timestamp}" required="true" requiredMessage="Please choose a submission">
+                                        <f:selectItem itemLabel="Submission" noSelectionOption="true" />
+                                        <f:selectItems value="#{resultsBean.timestamps}" var="timestamp" itemLabel="#{timestamp.toString()}" itemValue="#{timestamp.toString()}" />
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                            </t:div>
+                            <h:commandButton style="display: table;margin: auto;margin-top: 10px;" value="Get Results" action="#{resultsBean.getResultsList()}" styleClass="submit"></h:commandButton>
+                        </h:panelGrid>
+                    </h:form>
+                    <t:div rendered="#{resultsBean.showResultsTable}">
+                        <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
+                        <h:form>
+                            <h:panelGrid columns="3" style="margin: auto;margin-top:10px">
+                                <h:outputLabel style="text-align:center;margin-bottom:auto;" value="Publish Results "></h:outputLabel>
+                                <h:selectOneMenu value="#{resultsBean.organToPublish}" required="true" requiredMessage="Please choose an organ">
+                                    <f:selectItem itemLabel="Select Organ" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Left Kidney" itemValue="29663" />
+                                    <f:selectItem itemLabel="Right Kidney" itemValue="29662" />
+                                    <f:selectItem itemLabel="Spleen" itemValue="86" />
+                                    <f:selectItem itemLabel="Liver" itemValue="58" />
+                                    <f:selectItem itemLabel="Left Lung" itemValue="1326" />
+                                    <f:selectItem itemLabel="Right Lung" itemValue="1302" />
+                                    <f:selectItem itemLabel="Unirary Bladder" itemValue="237" />
+                                    <f:selectItem itemLabel="Muscle Body Of Left Rectus Abdominis" itemValue="40358" />
+                                    <f:selectItem itemLabel="Muscle Body Of Right Rectus Abdominis" itemValue="40357" />
+                                    <f:selectItem itemLabel="Lumbar Vertebra 1" itemValue="29139" />
+                                    <f:selectItem itemLabel="Thyroid" itemValue="7578" />
+                                    <f:selectItem itemLabel="Pancreas" itemValue="170" />
+                                    <f:selectItem itemLabel="Left Psoas Major Muscle" itemValue="32249" />
+                                    <f:selectItem itemLabel="Right Psoas Major Muscle" itemValue="32248" />
+                                    <f:selectItem itemLabel="Gallblader" itemValue="187" />
+                                    <f:selectItem itemLabel="Sternum" itemValue="2473" />
+                                    <f:selectItem itemLabel="Aorta" itemValue="480" />
+                                    <f:selectItem itemLabel="Trachea" itemValue="1247" />
+                                    <f:selectItem itemLabel="Left Adrenal Gland" itemValue="30325" />
+                                    <f:selectItem itemLabel="Right Adrenal Gland" itemValue="30324" />
+                                </h:selectOneMenu>
+                                <h:commandButton style="margin-top:auto;" value="Publish Organ Results" action="#{resultsBean.publishOrganResult()}" styleClass="submit slim"></h:commandButton>
+                            </h:panelGrid>
+                        </h:form>
+                        <ui:repeat var="metric" value="#{resultsBean.metrics}">
+                            <t:div>
+                                <h:outputLabel style="width:100%;" styleClass="labelClass" value="#{metric}"></h:outputLabel>
+                                <h:outputLabel rendered="#{!resultsBean.isMetricResults(metric)}" style="width:100%; color: #e74c3c;" styleClass="labelClass" value="No results available for #{metric}"></h:outputLabel>
+                                <t:div rendered="#{resultsBean.isMetricResults(metric)}" styleClass="well">
+                                    <table class="table table-striped results">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Left Kidney</th>
+                                                <th>Right Kidney</th>
+                                                <th>Spleen</th>
+                                                <th>Liver</th>
+                                                <th>Left Lung</th>
+                                                <th>Right Lung</th>
+                                                <th>Unirary Bladder</th>
+                                                <th>Muscle Body Of Left Rectus Abdominis</th>
+                                                <th>Muscle Body Of Right Rectus Abdominis</th>
+                                                <th>Lumbar Vertebra 1</th>
+                                                <th>Thyroid</th>
+                                                <th>Pancreas</th>
+                                                <th>Left Psoas Major Muscle</th>
+                                                <th>Right Psoas Major Muscle</th>
+                                                <th>Gallblader</th>
+                                                <th>Sternum</th>
+                                                <th>Aorta</th>
+                                                <th>Trachea</th>
+                                                <th>Left Adrenal Gland</th>
+                                                <th>Right Adrenal Gland</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <h:form>
+                                                <ui:repeat value="#{resultsBean.measures}" var="measure">
+                                                    <tr class="vmManager">
+                                                        <td><h:outputText value="#{measure}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Left Kidney',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Right Kidney',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Spleen',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Liver',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Left Lung',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Right Lung',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Unirary Bladder',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Muscle Body Of Left Rectus Abdominis',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Muscle Body Of Right Rectus Abdominis',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Lumbar Vertebra 1',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Thyroid',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Pancreas',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Left Psoas Major Muscle',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Right Psoas Major Muscle',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Gallblader',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Sternum',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Aorta',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Trachea',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Left Adrenal Gland',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                        <td><h:outputText value="#{resultsBean.getSingleCell('Right Adrenal Gland',measure, metric)}" styleClass="field"></h:outputText></td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </h:form>
+                                        </tbody>
+                                    </table>
+                                </t:div>
+                            </t:div>
+                        </ui:repeat>
+                    </t:div>
+                </t:div>
+                <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
+                <h:button style="display: table;margin: auto;margin-top: 10px;" value="Go to Dashboard" outcome="goToDashboard" styleClass="submit"></h:button>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

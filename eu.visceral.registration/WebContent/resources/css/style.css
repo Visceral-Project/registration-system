@@ -1,0 +1,635 @@
+@-moz-document regexp(".*") {
+    select#competitions.competitions {
+        background-color: #EEEEEE;
+        height: 64px;
+        width: auto;
+    }
+    td input.field {
+        max-width: 403px;
+        width: 100%;
+    }
+}
+
+select.competitions {
+    background-color: #EEEEEE;
+    height: 64px;
+    width: auto;
+}
+
+*:focus {
+    outline: none; /* Prevents blue border in Webkit */
+}
+
+html,body {
+    min-height: 100%;
+}
+
+.container {
+    margin: auto;
+}
+
+.centered {
+    margin: auto;
+    text-align: center;
+    padding: 15px;
+    color: white;
+}
+
+body.body {
+    padding: 10px;
+    /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDIwMSwyMDEsMjAxLDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(201, 201, 201, 1), rgba(255, 255, 255, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(201, 201, 201, 1), rgba(255, 255, 255, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(201, 201, 201, 1) ), color-stop(1, rgba(255, 255, 255, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFC9C9C9, EndColorStr=#FFFFFFFF );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFC9C9C9,EndColorStr=#FFFFFFFF)";
+    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.infoMessage {
+    color: lime;
+}
+
+.warnMessage {
+    color: orange;
+}
+
+a img {
+    display: block;
+    margin: auto;
+}
+
+h1 {
+    color: #838383;
+    text-shadow: 0px 1px 0px #999999;
+    -moz-box-shadow: 0px 1px 0px #3a3a3a;
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #838383;
+    text-shadow: 0px 1px 0px #999999;
+    -moz-box-shadow: 0px 1px 0px #3a3a3a;
+    text-align: center;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    text-align: center;
+    color: orange;
+}
+
+ul {
+    padding: 10px;
+    list-style-type: none;
+    text-shadow: 0px 1px 0px #000;
+    text-align: center;
+    -webkit-border-radius: 15px; /* Safari and Chrome */
+    -khtml-border-radius: 15px; /* Linux browsers */
+    border-radius: 15px; /* Opera 10.50, IE and CSS3 */
+    background-color: dimgray;
+    width: 367px;
+    margin: auto;
+}
+
+form {
+    margin: 0;
+}
+
+.viewContent { /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDYwLDYwLDYwLDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoNDMsNDMsNDMsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(60, 60, 60, 1), rgba(43, 43, 43, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(60, 60, 60, 1), rgba(43, 43, 43, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(60, 60, 60, 1) ), color-stop(1, rgba(43, 43, 43, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FF3C3C3C, EndColorStr=#FF2B2B2B );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF3C3C3C,EndColorStr=#FF2B2B2B)";
+    -webkit-border-radius: 15px; /* Safari and Chrome */
+    -khtml-border-radius: 15px; /* Linux browsers */
+    border-radius: 15px; /* Opera 10.50, IE and CSS3 */
+    box-shadow: 10px 10px 10px #999999;
+    padding: 15px;
+    margin: auto;
+}
+
+select {
+    font-size: 16px;
+}
+
+input.field {
+    min-height: 35px;
+    width: 367px;
+    border: solid 1px #E5E5E5;
+    /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDI1NSwyNTUsMjU1LDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjA3LDIwNywyMDcsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1), rgba(207, 207, 207, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(207, 207, 207, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 1) ), color-stop(1, rgba(207, 207, 207, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFFFF, EndColorStr=#FFCFCFCF );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFFFFFFF,EndColorStr=#FFCFCFCF)";
+    -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    -moz-border-radius: 5px; /* Firefox */
+    -webkit-border-radius: 5px; /* Safari and Chrome */
+    -khtml-border-radius: 5px; /* Linux browsers */
+    border-radius: 5px; /* Opera 10.50, IE and CSS3 */
+    border-color: #C9C9C9;
+    border: solid 1px #E5E5E5;
+    font-size: 16px;
+}
+
+input.field:hover,input.field:focus { /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1), rgba(238, 238, 238, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(238, 238, 238, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 1) ), color-stop(1, rgba(238, 238, 238, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFFFF, EndColorStr=#FFEEEEEE );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFFFFFFF,EndColorStr=#FFEEEEEE)";
+    -webkit-box-shadow: 0 0 25px #ccc;
+    -moz-box-shadow: 0 0 25px #ccc;
+    box-shadow: 0 0 25px #ccc;
+}
+
+label {
+    text-shadow: 0 1px 0 #000000;
+    margin-bottom: 3px;
+    display: block;
+    color: #999999;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+.links {
+    color: rgb(135, 171, 25);
+    cursor: auto;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    height: auto;
+    line-height: 16px;
+    list-style-type: none;
+    outline-color: rgb(102, 149, 23);
+    outline-style: none;
+    outline-width: 0px;
+    text-align: center;
+    width: auto;
+    text-shadow: rgb(0, 0, 0) 0px 1px 0px;
+    padding: 1px;
+}
+
+.submit {
+    outline: none;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0.1em 0.1em 0.2em black;
+    border: 2px solid;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari and Chrome */
+    -khtml-border-radius: 3px; /* Linux browsers */
+    border-radius: 3px; /* Opera 10.50, IE and CSS3 */
+    padding: 6px 9px 6px 9px;
+    color: #E7F2C7;
+    /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDEzNSwxNzEsMjUsMSk7IiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgxMDUsMTUwLDE5LDEpOyIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI2dyYWRpZW50KSIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIgLz48L3N2Zz4=);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(135, 171, 25, 1), rgba(105, 150, 19, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(135, 171, 25, 1), rgba(105, 150, 19, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(135, 171, 25, 1) ), color-stop(1, rgba(105, 150, 19, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FF87AB19, EndColorStr=#FF699613 );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF87AB19,EndColorStr=#FF699613)";
+    width: auto;
+    height: auto;
+    border-color: transparent;
+    margin-top: 8px;
+    font-size: 16px;
+    border-color: transparent;
+}
+
+.slim {
+    padding: 0;
+}
+
+.submit:hover {
+    outline: none;
+    /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDEwNSwxNTAsMTksMSk7IiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgxMzUsMTcxLDI1LDEpOyIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI2dyYWRpZW50KSIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIgLz48L3N2Zz4=);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(105, 150, 19, 1), rgba(135, 171, 25, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(105, 150, 19, 1), rgba(135, 171, 25, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(105, 150, 19, 1) ), color-stop(1, rgba(135, 171, 25, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FF699613, EndColorStr=#FF87AB19 );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF699613,EndColorStr=#FF87AB19)"
+}
+
+.submit:active {
+    background: #87AB19;
+    outline: none;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+}
+
+label.labelClass {
+    width: 367px;
+    color: rgb(255, 255, 255);
+    display: block;
+    list-style-type: none;
+    text-align: center;
+    text-shadow: rgb(0, 0, 0) 0px 1px 0px;
+    padding: 10px;
+    margin: auto;
+}
+
+label.wrapText {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+label.idInfo {
+    width: 200px;
+    white-space: normal;
+    color: #999;
+    text-shadow: none;
+}
+
+.wrapBigEmail tbody tr td {
+    width: 190px;
+}
+
+.uploadFile {
+    color: #ffffff;
+}
+
+.well {
+    min-height: 20px;
+    padding: 19px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.setBorderOnCell>tbody>tr:last-child>td {
+    min-height: 20px;
+    border: 1px groove #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.tableBorder {
+    min-height: 20px;
+    border: 1px groove #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.info_box {
+    text-align: center;
+    padding: 3px;
+}
+
+.table {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(221, 221, 221);
+    width: 100%;
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.popup_table table {
+    min-height: 20px;
+    padding: 3px;
+    margin-bottom: 14px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    color: #3f3f3f;
+}
+
+.table th,.table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+}
+
+.results th, .results td {
+    border-right: 1px solid #ddd;
+}
+
+.unwrapable {
+    white-space: nowrap;
+}
+
+.table-striped tbody>tr:nth-child(odd)>td,.table-striped tbody>tr:nth-child(odd)>th {
+    background-color: #f9f9f9;
+}
+
+.table-striped tbody>tr.pdf-uploaded>td {
+    background-color: #3498DB;
+}
+
+.table-striped tbody>tr.activated>td {
+    background-color: #F1C40F;
+}
+
+.table-striped tbody>tr.vm-assigned>td {
+    background-color: #2ECC71;
+}
+
+.table-striped tbody>tr.vm-submitted>td {
+    background-color: #e74c3c;
+}
+
+td span img {
+    cursor: pointer;
+}
+
+tr.vmManager td input.field {
+    width: auto;
+    text-align: center;
+}
+
+td span input {
+    min-height: 35px;
+    width: 367px;
+    border: solid 1px #E5E5E5;
+    /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDI1NSwyNTUsMjU1LDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjA3LDIwNywyMDcsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1), rgba(207, 207, 207, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(207, 207, 207, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 1) ), color-stop(1, rgba(207, 207, 207, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFFFF, EndColorStr=#FFCFCFCF );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFFFFFFF,EndColorStr=#FFCFCFCF)";
+    -moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    -webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    box-shadow: inset 0 3px 8px rgba(0, 0, 0, .24);
+    -moz-border-radius: 5px; /* Firefox */
+    -webkit-border-radius: 5px; /* Safari and Chrome */
+    -khtml-border-radius: 5px; /* Linux browsers */
+    border-radius: 5px; /* Opera 10.50, IE and CSS3 */
+    border-color: #C9C9C9;
+    border: solid 1px #E5E5E5;
+    font-size: 16px;
+}
+
+td span input:hover,td span input:focus { /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1), rgba(238, 238, 238, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1), rgba(238, 238, 238, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 1) ), color-stop(1, rgba(238, 238, 238, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFFFF, EndColorStr=#FFEEEEEE );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFFFFFFF,EndColorStr=#FFEEEEEE)";
+    -webkit-box-shadow: 0 0 25px #ccc;
+    -moz-box-shadow: 0 0 25px #ccc;
+    box-shadow: 0 0 25px #ccc;
+}
+
+/* -tomahawk-calendar-style---------------------------- */
+/* Default attributes of table container for entire calendar */
+.jscalendar-WH-table-style {
+    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #000000;
+    color: #000000;
+}
+
+/* Default attributes of DIV containing table container for entire calendar.
+ * You probably don't want to alter this style.
+ */
+.jscalendar-WH-div-style {
+    z-index: +999;
+    position: absolute;
+    visibility: hidden;
+}
+
+/* Default attributes used in calendar title (month and year columns).*/
+.jscalendar-WH-title-style {
+    padding: 2px;
+    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Default attributes used in calendar title background.*/
+.jscalendar-WH-title-background-style { /* SVG fallback(Opera 11.10-, IE9) */
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDEzNSwxNzEsMjUsMSk7IiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6cmdiYSgxMDUsMTUwLDE5LDEpOyIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI2dyYWRpZW50KSIgaGVpZ2h0PSIxMDAlIiB3aWR0aD0iMTAwJSIgLz48L3N2Zz4=);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(135, 171, 25, 1), rgba(105, 150, 19, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(135, 171, 25, 1), rgba(105, 150, 19, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(135, 171, 25, 1) ), color-stop(1, rgba(105, 150, 19, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FF87AB19, EndColorStr=#FF699613 );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF87AB19,EndColorStr=#FF699613)";
+}
+
+/* Normal appearance of controls in calendar title. */
+/* Note: The right, left and down icons are images, jscalendar-WHich must be edited if you need to change them. */
+.jscalendar-WH-title-control-normal-style {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    cursor: pointer;
+}
+
+/* Moused-over (selected) appearance of controls in calendar title. */
+.jscalendar-WH-title-control-select-style {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    cursor: pointer;
+}
+
+/* Default attributes of drop down lists (month and year). */
+.jscalendar-WH-dropdown-style {
+    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #DDDDDD;
+    background-color: #EEEEEE;
+    cursor: pointer;
+}
+
+/* Default attributes selected (mouse-over) item in drop down lists (month and year). */
+.jscalendar-WH-dropdown-select-style {
+    background-color: #F3F3F3;
+}
+
+/* Default attributes unselected (mouse-off) item in drop down lists (month and year). */
+.jscalendar-WH-dropdown-normal-style {
+    background-color: inherit;
+}
+
+/* Default attributes of calendar body (weekday titles and numbers). */
+.jscalendar-WH-body-style {
+    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    background:
+        url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjpyZ2JhKDIwMSwyMDEsMjAxLDEpOyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsMSk7IiAvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IGZpbGw9InVybCgjZ3JhZGllbnQpIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIiAvPjwvc3ZnPg==);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, rgba(201, 201, 201, 1), rgba(255, 255, 255, 1) );
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, rgba(201, 201, 201, 1), rgba(255, 255, 255, 1) );
+    /* Chrome 7+ & Safari 5.03+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(201, 201, 201, 1) ), color-stop(1, rgba(255, 255, 255, 1) ) );
+    /* IE5.5 - IE7 */
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFC9C9C9, EndColorStr=#FFFFFFFF );
+    /* IE8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFC9C9C9,EndColorStr=#FFFFFFFF)";
+}
+
+/* Attributes of current day in calendar body. */
+.jscalendar-WH-current-day-style {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Attributes of end-of-week days (Sundays) in calendar body. */
+.jscalendar-WH-end-of-weekday-style {
+    color: #909090;
+    text-decoration: none;
+}
+
+/* Attributes of all other days in calendar body. */
+.jscalendar-WH-normal-day-style {
+    color: black;
+    text-decoration: none;
+}
+
+.jscalendar-WH-would-be-selected-day-style {
+    background-color: #EEEEEE;
+}
+
+/* Attributes of border around selected day in calendar body. */
+.jscalendar-WH-selected-day-style {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #a0a0a0;
+}
+
+/* Default attributes of designated holidays. */
+.jscalendar-WH-holiday-style {
+    background-color: #FFDDDD;
+}
+
+/* Attributes of today display at bottom on calendar */
+.jscalendar-WH-today-style {
+    padding: 0px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Attributes of today display label at bottom on calendar */
+.jscalendar-WH-today-lbl-style {
+    padding: 5px;
+    text-align: center;
+}
+
+/* Attributes of week number division (divider.gif) */
+.jscalendar-WH-weeknumber-div-style {
+    background-color: #d0d0d0;
+    padding: 0px;
+}
+
+/* Attributes of week labels in calendar. */
+.jscalendar-WH-normal-week-style {
+    color: black;
+    text-decoration: none;
+}
+
+.jscalendar-WH-would-be-selected-week-style {
+    background-color: #EEEEEE;
+}

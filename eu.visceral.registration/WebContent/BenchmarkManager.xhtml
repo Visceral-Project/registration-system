@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+    #{benchmarkManagerBean.init()}
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Benchmark Manager</h2>
+            </t:div>
+            <t:div styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <h:form>
+                    <h:outputLabel styleClass="labelClass" value="Create Benchmark"></h:outputLabel>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="name" value="Benchmark's Title :"></h:outputLabel>
+                        <h:inputText id="name" value="#{benchmarkManagerBean.name}" required="true" requiredMessage="Please Enter Benchmark's Title" styleClass="field"></h:inputText>
+
+                        <h:outputLabel value="Starting Date :"></h:outputLabel>
+                        <t:inputCalendar maxlength="10" value="#{benchmarkManagerBean.startDate}" popupTheme="WH" monthYearRowClass="monthYearRowClass" weekRowClass="weekRowClass" dayCellClass="dayCellClass"
+                            popupWeekString="CW" renderAsPopup="true" renderPopupButtonAsImage="true" popupDateFormat="dd.MM.yyyy" alt="Calendar" title="Calendar" required="true"
+                            requiredMessage="Please Select Starting Date">
+                        </t:inputCalendar>
+
+                        <h:outputLabel value="Ending Date :"></h:outputLabel>
+                        <t:inputCalendar maxlength="10" value="#{benchmarkManagerBean.endDate}" popupTheme="WH" monthYearRowClass="monthYearRowClass" weekRowClass="weekRowClass" dayCellClass="dayCellClass"
+                            popupWeekString="Wk" renderAsPopup="true" renderPopupButtonAsImage="true" popupDateFormat="dd.MM.yyyy" alt="Calendar" title="Calendar" required="true"
+                            requiredMessage="Please Select Ending Date">
+                        </t:inputCalendar>
+
+                        <h:commandButton value="Create Benchmark" action="#{benchmarkManagerBean.createCompetition()}" styleClass="submit"></h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+                <h:form>
+                    <h:outputLabel styleClass="labelClass" value="Change a Benchmark"></h:outputLabel>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Choose Benchmark :"></h:outputLabel>
+                        <h:selectOneMenu value="#{benchmarkManagerBean.competitionToChange}" required="true" requiredMessage="Please select Benchmark!">
+                            <f:selectItem itemLabel="Select Benchmark ..." noSelectionOption="true" />
+                            <f:selectItems value="#{benchmarkManagerBean.competitions}" var="c" itemLabel="#{c.name}" itemValue="#{c.name}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel for="name" value="Benchmark's Title :"></h:outputLabel>
+                        <h:inputText id="name" value="#{benchmarkManagerBean.newName}" styleClass="field"></h:inputText>
+
+                        <h:outputLabel value="Starting Date :"></h:outputLabel>
+                        <t:inputCalendar maxlength="10" value="#{benchmarkManagerBean.newStartDate}" popupTheme="WH" monthYearRowClass="monthYearRowClass" weekRowClass="weekRowClass" dayCellClass="dayCellClass"
+                            popupWeekString="CW" renderAsPopup="true" renderPopupButtonAsImage="true" popupDateFormat="dd.MM.yyyy" alt="Calendar" title="Calendar">
+                        </t:inputCalendar>
+
+                        <h:outputLabel value="Ending Date :"></h:outputLabel>
+                        <t:inputCalendar maxlength="10" value="#{benchmarkManagerBean.newEndDate}" popupTheme="WH" monthYearRowClass="monthYearRowClass" weekRowClass="weekRowClass" dayCellClass="dayCellClass"
+                            popupWeekString="Wk" renderAsPopup="true" renderPopupButtonAsImage="true" popupDateFormat="dd.MM.yyyy" alt="Calendar" title="Calendar">
+                        </t:inputCalendar>
+
+                        <h:commandButton value="Change Benchmark" action="#{benchmarkManagerBean.changeCompetition()}" styleClass="submit"></h:commandButton>
+                    </h:panelGrid>
+                </h:form>
+                <h:form>
+                    <h:outputLabel styleClass="labelClass" value="Delete Benchmark"></h:outputLabel>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="name" value="Choose Benchmark :"></h:outputLabel>
+                        <h:selectOneMenu value="#{benchmarkManagerBean.competition}" required="true" requiredMessage="Please select Benchmark!">
+                            <f:selectItem itemLabel="Select Benchmark ..." noSelectionOption="true" />
+                            <f:selectItems value="#{benchmarkManagerBean.competitions}" var="c" itemLabel="#{c.name}" itemValue="#{c.name}" />
+                        </h:selectOneMenu>
+
+                        <h:commandButton type="submit" value="Delete Benchmark"
+                            onclick="if (confirm('Deleting a benchmark will also delete all participants associated with it. Are you sure?')) return true; else return false;"
+                            action="#{benchmarkManagerBean.deleteCompetition()}" styleClass="submit"></h:commandButton>
+                        <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                    </h:panelGrid>
+                </h:form>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

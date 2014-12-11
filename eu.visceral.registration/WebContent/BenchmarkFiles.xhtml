@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{benchmarkFilesBean.init(dashboardBean.competition)}
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Benchmark Files</h2>
+            </t:div>
+            <t:div styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <t:div>
+                    <h:outputLabel style="width:100%;" styleClass="labelClass" value="Benchmark Files"></h:outputLabel>
+                    <h:outputLabel rendered="#{!benchmarkFilesBean.listExists}" style="width:100%; color: #e74c3c;" styleClass="labelClass" value="No files"></h:outputLabel>
+                    <t:div rendered="#{benchmarkFilesBean.listExists}" styleClass="well">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>File name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <h:form>
+                                    <ui:repeat value="#{benchmarkFilesBean.files}" var="file">
+                                        <tr class="vmManager">
+                                            <td><h:outputText value="#{file}" styleClass="field"></h:outputText></td>
+                                            <td class="unwrapable"><h:commandLink value="Download" action="#{benchmarkFilesBean.downloadFile(file)}" target="_blank" styleClass="submit"></h:commandLink></td>
+                                        </tr>
+                                    </ui:repeat>
+                                </h:form>
+                            </tbody>
+                        </table>
+                    </t:div>
+                </t:div>
+                <h:button style="display: table;margin: auto;margin-top: 10px;" value="Dashboard" outcome="goToDashboard" styleClass="submit"></h:button>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

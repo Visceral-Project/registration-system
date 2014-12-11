@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{adminDashboardBean.init()}
+        <f:metadata>
+            <f:viewParam name="startIndex" value="#{adminDashboardBean.startIndex}" />
+            <f:event listener="#{adminDashboardBean.loadUserList()}" type="preRenderView" />
+        </f:metadata>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Dashboard</h2>
+            </t:div>
+            <h:form styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <t:div styleClass="well">
+                    <h:outputLabel>Registered participants</h:outputLabel>
+                    <h:panelGrid columns="3" style="margin: auto;">
+                        <h:outputLabel value="Choose Benchmark :"></h:outputLabel>
+                        <h:selectOneMenu value="#{adminDashboardBean.compId}">
+                            <f:selectItem itemLabel="Select Benchmark ..." noSelectionOption="true" itemValue="0" />
+                            <f:selectItems value="#{adminDashboardBean.competitions}" var="c" itemLabel="#{c.name}" itemValue="#{c.competitionid}" />
+                        </h:selectOneMenu>
+                        <h:commandButton value="Reload User List" action="#{adminDashboardBean.reloadList()}" styleClass="submit"></h:commandButton>
+                    </h:panelGrid>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>E-mail</th>
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Unique ID</th>
+                                <th>Affiliation</th>
+                                <th>Address</th>
+                                <th>Signed Agreement</th>
+                                <th>Activation status</th>
+                                <th>Virtual Machine</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{adminDashboardBean.userList}" var="user">
+                                <tr class="#{adminDashboardBean.getStatus(user)}">
+                                    <td>#{user.email}</td>
+                                    <td>#{user.firstname}</td>
+                                    <td>#{user.lastname}</td>
+                                    <td>#{fn:substring(user.uniqueid, 0, 6)}</td>
+                                    <td>#{user.affiliation}</td>
+                                    <td><t:popup styleClass="popup_table" closePopupOnExitingElement="true" closePopupOnExitingPopup="true" displayAtDistanceX="0" displayAtDistanceY="0">
+                                            <t:div styleClass="well info_box">
+                                                <h:outputText value="Info" />
+                                            </t:div>
+                                            <f:facet name="popup">
+                                                <h:panelGroup>
+                                                    <h:panelGrid styleClass="table table-striped" columns="1">
+                                                        <h:outputLabel value="Country"></h:outputLabel>
+                                                        <h:outputText value="#{user.getAddress().country}"></h:outputText>
+                                                        <h:outputLabel value="City"></h:outputLabel>
+                                                        <h:outputText value="#{user.getAddress().city}"></h:outputText>
+                                                        <h:outputLabel value="Post Code"></h:outputLabel>
+                                                        <h:outputText value="#{user.getAddress().zip}"></h:outputText>
+                                                        <h:outputLabel value="Address"></h:outputLabel>
+                                                        <h:outputText value="#{user.getAddress().street}"></h:outputText>
+                                                        <h:outputLabel value="Phone"></h:outputLabel>
+                                                        <h:outputText value="#{user.phone}"></h:outputText>
+                                                    </h:panelGrid>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                        </t:popup></td>
+                                    <td class="unwrapable"><h:outputLink rendered="#{user.pdfUploaded}" value="/register/Download.xhtml?pdf=#{adminDashboardBean.URLencode(user.email)}.pdf" target="_blank" styleClass="submit">Download</h:outputLink>
+                                        <h:outputText rendered="#{!user.pdfUploaded}" value="Not available yet"></h:outputText></td>
+                                    <td class="unwrapable"><h:link disabled="#{!user.pdfUploaded}" rendered="#{!user.copyrightSigned}" outcome="activationPage" value="Activate" styleClass="submit">
+                                            <f:param name="email" value="#{user.email}" />
+                                            <f:param name="status" value="activate" />
+                                        </h:link> <h:link disabled="#{!user.pdfUploaded}" rendered="#{user.copyrightSigned}" outcome="activationPage" value="Deactivate" styleClass="submit">
+                                            <f:param name="email" value="#{user.email}" />
+                                            <f:param name="status" value="deactivate" />
+                                        </h:link></td>
+                                    <td class="unwrapable"><h:link disabled="#{!user.pdfUploaded}" rendered="#{!adminDashboardBean.hasVm(user)}" outcome="assignVm" value="Assign VM" styleClass="submit">
+                                            <f:param name="email" value="#{user.email}" />
+                                            <f:param name="os" value="#{user.preferance}" />
+                                        </h:link> <t:popup styleClass="popup_table" rendered="#{adminDashboardBean.hasVm(user)}" closePopupOnExitingElement="true" closePopupOnExitingPopup="true" displayAtDistanceX="0"
+                                            displayAtDistanceY="0">
+                                            <t:div styleClass="well info_box">
+                                                <h:outputText value="Info" />
+                                            </t:div>
+                                            <f:facet name="popup">
+                                                <h:panelGroup>
+                                                    <ui:repeat value="#{adminDashboardBean.getVm(user)}" var="vm">
+                                                        <h:panelGrid styleClass="table table-striped" columns="1">
+                                                            <h:outputLabel value="Username"></h:outputLabel>
+                                                            <h:outputText value="#{vm.username}"></h:outputText>
+                                                            <h:outputLabel value="Password"></h:outputLabel>
+                                                            <h:outputText value="#{vm.password}"></h:outputText>
+                                                            <h:outputLabel value="DNS Name"></h:outputLabel>
+                                                            <h:outputText value="#{vm.dnsname}"></h:outputText>
+                                                            <h:outputLabel value="Protocol"></h:outputLabel>
+                                                            <h:outputText value="#{vm.protocol}"></h:outputText>
+                                                            <h:outputLabel value="Port"></h:outputLabel>
+                                                            <h:outputText value="#{vm.port}"></h:outputText>
+                                                            <h:outputLabel value="Operating System"></h:outputLabel>
+                                                            <h:outputText value="#{vm.os}"></h:outputText>
+                                                            <h:outputLabel value="Initialization Key Visibility"></h:outputLabel>
+                                                            <h:outputText rendered="#{vm.showInitKey}" value="Visible"></h:outputText>
+                                                            <h:outputText rendered="#{!vm.showInitKey}" value="Invisible"></h:outputText>
+                                                        </h:panelGrid>
+                                                    </ui:repeat>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                        </t:popup></td>
+                                    <td class="unwrapable"><h:commandLink value="x" onclick="if (confirm('Are you sure you want to delete this user?')) return true; else return false;"
+                                            action="#{adminDashboardBean.deleteUser(user)}" styleClass="submit"></h:commandLink></td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </t:div>
+                <h:panelGrid columns="1">
+                    <t:div style="margin-top: 10px">
+                        <h:link style="margin-right: 4px" rendered="#{adminDashboardBean.hasPrevious()}" outcome="goToAdminDashboard" value="Previous" styleClass="submit">
+                            <f:param name="startIndex" value="#{adminDashboardBean.startIndex - adminDashboardBean.pageSize}" />
+                        </h:link>
+                        <h:link rendered="#{adminDashboardBean.hasNext()}" outcome="goToAdminDashboard" value="Next" styleClass="submit">
+                            <f:param name="startIndex" value="#{adminDashboardBean.startIndex + adminDashboardBean.pageSize}" />
+                        </h:link>
+                    </t:div>
+                    <t:div>
+                        <h:button style="margin-right: 4px" value="Benchmark Manager" outcome="benchmarkManager" styleClass="submit"></h:button>
+                        <h:button style="margin-right: 4px" value="File Manager" outcome="fileManager" styleClass="submit"></h:button>
+                        <h:button style="margin-right: 4px" value="VM Manager"
+                            onclick="if (confirm('While the VM manager loads, it calls the Azure API for the status of the VMs. This takes about 1 minute so delays on the load times are expected. Press OK to continue.')) {window.location.href='/register/VmManager.xhtml'; return true;} else return false;"
+                            styleClass="submit"></h:button>
+                        <h:button style="margin-right: 4px" value="Manage Leaderboard" outcome="adminLeaderboard" styleClass="submit"></h:button>
+                        <h:commandButton type="submit" action="#{adminDashboardBean.logUserOut()}" value="Logout" styleClass="submit"></h:commandButton>
+                    </t:div>
+                </h:panelGrid>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</f:view>

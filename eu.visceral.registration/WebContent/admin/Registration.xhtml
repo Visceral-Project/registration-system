@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Administrator Registration</h2>
+            </t:div>
+            <h:form styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <h:panelGrid columns="2">
+                    <h:outputLabel for="email" value="Email :"></h:outputLabel>
+                    <h:inputText id="email" binding="#{email}" value="#{adminRegBean.email}" required="true" requiredMessage="Please enter email!" styleClass="field"></h:inputText>
+
+                    <h:outputLabel for="confirmemail" value="Confirm Email :"></h:outputLabel>
+                    <h:inputText id="confirmemail" value="#{adminRegBean.confirmemail}" required="true" requiredMessage="Please confirm email!" validator="#{adminRegBean.emailValidator}" styleClass="field">
+                        <f:attribute name="email" value="#{email}"></f:attribute>
+                    </h:inputText>
+
+                    <h:outputLabel for="password" value="Password :"></h:outputLabel>
+                    <h:inputSecret id="password" binding="#{password}" value="#{adminRegBean.password}" required="true" requiredMessage="Please enter password!" styleClass="field">
+                    </h:inputSecret>
+
+                    <h:outputLabel for="confirmpassword" value="Confirm Password :"></h:outputLabel>
+                    <h:inputSecret id="confirmpassword" value="#{adminRegBean.confirmpassword}" required="true" requiredMessage="Please confirm password!" styleClass="field">
+                        <f:validator validatorId="passwordValidator"></f:validator>
+                        <f:attribute name="password" value="#{password}"></f:attribute>
+                    </h:inputSecret>
+
+                    <h:outputLabel for="firstname" value="First Name :"></h:outputLabel>
+                    <h:inputText id="firstname" value="#{adminRegBean.firstname}" required="true" requiredMessage="Please enter first name!" styleClass="field"></h:inputText>
+
+                    <h:outputLabel for="lastname" value="Last Name :"></h:outputLabel>
+                    <h:inputText id="lastname" value="#{adminRegBean.lastname}" required="true" requiredMessage="Please enter last name!" styleClass="field"></h:inputText>
+
+                    <h:outputLabel for="affiliation" value="Affiliation :"></h:outputLabel>
+                    <h:inputText id="affiliation" value="#{adminRegBean.affiliation}" required="true" requiredMessage="Please enter affiliation!" styleClass="field"></h:inputText>
+
+                    <h:outputLabel for="phone" value="Phone :"></h:outputLabel>
+                    <h:inputText id="phone" value="#{adminRegBean.phone}" required="true" requiredMessage="Please enter phone!" styleClass="field"></h:inputText>
+
+                    <h:outputLabel for="get_conf_emails" value="Responsible for user confirmation :"></h:outputLabel>
+                    <h:selectBooleanCheckbox id="get_conf_emails" value="#{adminRegBean.get_conf_emails}"></h:selectBooleanCheckbox>
+
+                    <h:commandButton type="submit" value="Submit" action="#{adminRegBean.addAdmin()}" styleClass="submit"></h:commandButton>
+                    <h:button type="button" value="Home" outcome="loginPage" styleClass="submit"></h:button>
+                </h:panelGrid>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</f:view>

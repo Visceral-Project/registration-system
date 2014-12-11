@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Administrator Registration</h2>
+            </t:div>
+            <t:div styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Email :"></h:outputLabel>
+                    <h:outputLabel styleClass="wrapText" value="#{adminRegBean.email}"></h:outputLabel>
+
+                    <h:outputLabel value="First name :"></h:outputLabel>
+                    <h:outputLabel styleClass="wrapText" value="#{adminRegBean.firstname}"></h:outputLabel>
+
+                    <h:outputLabel value="Last name :"></h:outputLabel>
+                    <h:outputLabel styleClass="wrapText" value="#{adminRegBean.lastname}"></h:outputLabel>
+
+                    <h:outputLabel value="Affiliation :"></h:outputLabel>
+                    <h:outputLabel styleClass="wrapText" value="#{adminRegBean.affiliation}"></h:outputLabel>
+
+                    <h:outputLabel value="Phone :"></h:outputLabel>
+                    <h:outputLabel styleClass="wrapText" value="#{adminRegBean.phone}"></h:outputLabel>
+
+                    <h:outputLabel value="Receiver of registration confirmation mails : "></h:outputLabel>
+                    <h:selectBooleanCheckbox value="#{adminRegBean.get_conf_emails}" disabled="true"></h:selectBooleanCheckbox>
+
+                    <h:button value="Login to admin dashboard" outcome="loginPage" styleClass="submit"></h:button>
+                </h:panelGrid>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

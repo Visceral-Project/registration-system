@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{assignVmBean.init()}
+        <f:metadata>
+            <f:viewParam name="email" value="#{assignVmBean.email}" />
+            <f:viewParam name="os" value="#{assignVmBean.os}" />
+        </f:metadata>
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>Administrative Dashboard</h2>
+            </t:div>
+            <t:div>
+                <h:form styleClass="viewContent">
+                    <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="dnsName" value="DNS name :"></h:outputLabel>
+                        <h:inputText id="dnsName" value="#{assignVmBean.dnsName}" required="true" requiredMessage="Please Enter The DNS Name Of The Machine" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="username" value="Username :"></h:outputLabel>
+                        <h:inputText id="username" value="#{assignVmBean.username}" required="true" requiredMessage="Please Enter The Username For The Machine" styleClass="field"></h:inputText>
+
+                        <h:outputLabel for="password" value="Password :"></h:outputLabel>
+                        <h:inputSecret id="password" value="#{assignVmBean.password}" required="true" requiredMessage="Please Enter The Password For The Machine" styleClass="field"></h:inputSecret>
+
+                        <h:outputLabel for="os" value="Operating System :"></h:outputLabel>
+                        <h:selectOneMenu id="os" value="#{assignVmBean.os}" required="true" requiredMessage="Please Enter The Operating System Of The Machine">
+                            <f:selectItem itemLabel="Windows Server 2012" itemValue="Windows Server 2012" />
+                            <f:selectItem itemLabel="Windows Server 2008" itemValue="Windows Server 2008" />
+                            <f:selectItem itemLabel="Ubuntu 12.04 LTS" itemValue="Ubuntu 12.04 LTS" />
+                            <f:selectItem itemLabel="openSuSE 12.3" itemValue="openSuSE 12.3" />
+                            <f:selectItem itemLabel="OpenLog CentOS 6.3" itemValue="OpenLog CentOS 6.3" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel for="protocol" value="Protocol :"></h:outputLabel>
+                        <h:selectOneMenu id="protocol" value="#{assignVmBean.protocol}" required="true" requiredMessage="Please Select Protocol">
+                            <f:selectItem itemValue="RDP" itemLabel="RDP" />
+                            <f:selectItem itemValue="SSH" itemLabel="SSH" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel for="port" value="Port :"></h:outputLabel>
+                        <h:inputText id="port" value="#{assignVmBean.port}" converterMessage="Port code must be between 22 and 65535" required="true" requiredMessage="Please Enter Port To Connect" styleClass="field">
+                            <f:validateLength minimum="1" maximum="5"></f:validateLength>
+                            <f:converter converterId="javax.faces.Integer"></f:converter>
+                        </h:inputText>
+
+                        <h:outputLabel for="show_init_key" value="Use location centroid initialisation :"></h:outputLabel>
+                        <h:selectBooleanCheckbox id="show_init_key" value="#{assignVmBean.show_init_key}"></h:selectBooleanCheckbox>
+
+                        <h:commandButton type="submit" value="Assign VM" action="#{assignVmBean.assign()}" styleClass="submit"></h:commandButton>
+                        <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                    </h:panelGrid>
+                </h:form>
+            </t:div>
+        </h:panelGrid>
+    </h:body>
+</f:view>

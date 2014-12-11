@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <h:head>
+        #{vmManagerBean.init()}
+        <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body styleClass="body">
+        <h:panelGrid columns="1" styleClass="container">
+            <t:div>
+                <h:outputLink value="http://www.visceral.eu/">
+                    <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
+                </h:outputLink>
+                <h1>Visceral Registration System</h1>
+                <h2>VM Manager</h2>
+            </t:div>
+            <h:form styleClass="viewContent">
+                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage" style="margin-bottom: 10px;"></h:messages>
+                <t:div styleClass="well">
+                    <h:outputLabel>Assigned Virtual Machines</h:outputLabel>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>DNS name</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Operating System</th>
+                                <th>Port</th>
+                                <th>Protocol</th>
+                                <th>Initialization Key Visibility</th>
+                                <th>VM Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{vmManagerBean.vmList}" var="vm">
+                                <tr class="vmManager">
+                                    <td><h:inputText value="#{vm.dnsname}" styleClass="field"></h:inputText></td>
+                                    <td><h:inputText value="#{vm.username}" styleClass="field"></h:inputText></td>
+                                    <td><h:inputText value="#{vm.password}" styleClass="field"></h:inputText></td>
+                                    <td><h:selectOneMenu value="#{vm.os}">
+                                            <f:selectItem itemLabel="Windows Server 2012" itemValue="Windows Server 2012" />
+                                            <f:selectItem itemLabel="Windows Server 2008" itemValue="Windows Server 2008" />
+                                            <f:selectItem itemLabel="Ubuntu 12.04 LTS" itemValue="Ubuntu 12.04 LTS" />
+                                            <f:selectItem itemLabel="openSuSE 12.3" itemValue="openSuSE 12.3" />
+                                            <f:selectItem itemLabel="OpenLog CentOS 6.3" itemValue="OpenLog CentOS 6.3" />
+                                        </h:selectOneMenu></td>
+                                    <td><h:inputText id="port" value="#{vm.port}" converterMessage="Port code must be between 22 and 65535" styleClass="field">
+                                            <f:validateLength minimum="1" maximum="5"></f:validateLength>
+                                            <f:converter converterId="javax.faces.Integer"></f:converter>
+                                        </h:inputText></td>
+                                    <td><h:selectOneMenu id="protocol" value="#{vm.protocol}">
+                                            <f:selectItem itemValue="RDP" itemLabel="RDP" />
+                                            <f:selectItem itemValue="SSH" itemLabel="SSH" />
+                                        </h:selectOneMenu></td>
+                                    <td><h:selectBooleanCheckbox value="#{vm.showInitKey}"></h:selectBooleanCheckbox></td>
+                                    <td class="unwrapable"><h:commandLink rendered="#{vmManagerBean.vmStatuses.containsKey(vm.dnsname)}" value="Stop VM"
+                                            onclick="if (confirm('If you press OK this VM is going to shutdown. Give the Virtual Machine a bit of time to shutdown and then refresh to check the status.')) return true; else return false;"
+                                            action="#{vmManagerBean.shutdownVm(vm.dnsname)}" styleClass="submit"></h:commandLink> <h:commandLink rendered="#{!vmManagerBean.vmStatuses.containsKey(vm.dnsname)}"
+                                            value="Start VM"
+                                            onclick="if (confirm('If you press OK this VM is going to boot up. Give the Virtual Machine a bit of time to boot up and then refresh to check the status.')) return true; else return false;"
+                                            action="#{vmManagerBean.startVm(vm.dnsname)}" styleClass="submit"></h:commandLink></td>
+                                    <td class="unwrapable"><h:commandLink value="Save" action="#{vmManagerBean.updateVm(vm)}" styleClass="submit"></h:commandLink></td>
+                                    <td class="unwrapable"><h:commandLink value="x" onclick="if (confirm('Are you sure you want to delete this VM?')) return true; else return false;"
+                                            action="#{vmManagerBean.deleteVm(vm)}" styleClass="submit"></h:commandLink></td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </t:div>
+                <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</f:view>
