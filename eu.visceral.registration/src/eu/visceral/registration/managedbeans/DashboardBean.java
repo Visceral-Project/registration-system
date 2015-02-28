@@ -1,15 +1,11 @@
 package eu.visceral.registration.managedbeans;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -135,7 +131,6 @@ public class DashboardBean {
                     this.VM_status = getVmStatus(this.VM_DNSname);
                     this.VM_exclusion_status = getVmExclusionStatus();
                 }
-
                 if (this.uniqueID.contains("_submitted")) {
                     VM_submitted = true;
                 } else {
@@ -387,24 +382,11 @@ public class DashboardBean {
         }
     }
 
-    public void submitVm() throws IOException {
+    public void submitVm() throws Exception {
         if (!this.uniqueID.contains("_submitted")) {
-
-            String url = "https://visceral.eu:8181/VisceralVMService/vm/blockaccess/" + this.VM_DNSname;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            if (response.toString().contains("success")) {
+            VmApiAccessor api = new VmApiAccessor();
+            String response = api.callApi("blockaccess", this.VM_DNSname);
+            if (response.contains("202")) {
                 SendEmail mail = new SendEmail();
                 mail.sendVmSubmissionConf(this.user, VM_DNSname);
 
