@@ -82,6 +82,14 @@ public class AdminPublishedResultsBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to remove result. Please try again", null));
         }
     }
+    
+    public void deleteAllPublishedResults() {
+        if (service.removeAllPublishedResults()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "All results were removed from the leaderboard", null));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to remove results. Please try again", null));
+        }
+    }
 
     /**
      * @return the metrics
