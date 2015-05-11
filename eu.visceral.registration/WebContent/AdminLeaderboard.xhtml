@@ -17,7 +17,10 @@
             </t:div>
             <t:div styleClass="viewContent">
                 <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
-                <h:button style="display: table;margin: auto;margin-top: 10px;" value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                <h:form style="display: table;margin: auto;margin-top: 10px;">
+                    <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                    <h:commandLink style="margin-left:5px;" value="Delete All Results" action="#{adminLeaderboardBean.deleteAllPublishedResults()}" styleClass="submit"></h:commandLink>
+                </h:form>
                 <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
                 <ui:repeat var="metric" value="#{adminLeaderboardBean.metrics}">
                     <t:div>
@@ -94,7 +97,10 @@
                     </t:div>
                 </ui:repeat>
                 <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
-                <h:button style="display: table;margin: auto;margin-top: 10px;" value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                <h:form style="display: table;margin: auto;margin-top: 10px;">
+                    <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
+                    <h:commandLink style="margin-left:5px;" value="Delete All Results" action="#{adminLeaderboardBean.deleteAllPublishedResults()}" styleClass="submit"></h:commandLink>
+                </h:form>
             </t:div>
         </h:panelGrid>
     </h:body>

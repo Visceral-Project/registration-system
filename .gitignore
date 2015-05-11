@@ -4,3 +4,4 @@ eu.visceral.registration/*
 !eu.visceral.registration/src
 !LICENSE
 !README.md
+!MySQL_bootstrap.sql

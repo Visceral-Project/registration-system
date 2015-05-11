@@ -740,7 +740,11 @@ public class VisceralEAO {
     public String publishResult(User participant, String modality, String region, int configuration, String shortMetric, String longMetric, String organID, Timestamp timestamp) {
         DecimalFormat df = new DecimalFormat("#.###");
         String cellValue = df.format(this.getSingleOrganResultAvg(participant.getUniqueid(), organID, modality, region, configuration, shortMetric, timestamp.toString()));
+<<<<<<< HEAD
         PublishedResult dbResponse = checkExistingResults(participant.getFirstname() + " " + participant.getLastname(), timestamp, longMetric,modality,organID,shortMetric.toLowerCase(),cellValue);
+=======
+        PublishedResult dbResponse = checkExistingResults(participant.getFirstname() + " " + participant.getLastname(), timestamp, longMetric);
+>>>>>>> cfded8b5ee5ccf9b241b821e80661c128853c5ba
         if (dbResponse == null) {
             Query q = this.entityManager.createNativeQuery("INSERT INTO `regsystem_visceral`.`published_results` (`prtcpnt`, `affiliation`,`modality`, `"+shortMetric+"`, `organname`,`organvalue`, `TIMESTAMP`) VALUES (?1, ?2, ?3, ?4, ?5,?6,?7);");
             q.setParameter(1, participant.getFirstname() + " " + participant.getLastname());
@@ -776,5 +780,10 @@ public class VisceralEAO {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    public boolean removeAllPublishedResults() {
+        Query q = this.entityManager.createNativeQuery("DELETE FROM `regsystem_visceral`.`published_results`;");
+        return q.executeUpdate() > 0;
     }
 }
