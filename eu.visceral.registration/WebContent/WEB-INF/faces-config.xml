@@ -184,6 +184,13 @@
             <to-view-id>/AdminLeaderboard.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule><navigation-rule>
+        <display-name>Testpage.xhtml</display-name>
+        <from-view-id>/Testpage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Testpage</from-outcome>
+            <to-view-id>/Testpage.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule><navigation-rule>
         <display-name>Results.xhtml</display-name>
         <from-view-id>/Dashboard.xhtml</from-view-id>
         <navigation-case>

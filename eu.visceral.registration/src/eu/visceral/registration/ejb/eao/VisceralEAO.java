@@ -698,15 +698,37 @@ public class VisceralEAO {
 
         List<PublishedResult> results = Util.castList(PublishedResult.class, q.getResultList());
         return results;
+        
     }
+    
+    public List<PublishedResult> getMaxDice() {
+        Query q = this.entityManager.createQuery("SELECT c,max(c.dice) FROM PublishedResult c ");
+        q.setHint("javax.persistence.cache.storeMode", "REFRESH");
 
-    public PublishedResult checkExistingResults(String participant, Timestamp timestamp, String metric) {
-        Query q = this.entityManager.createQuery("SELECT c FROM PublishedResult c Where c.prtcpnt=?1 and c.timestamp=?2 and c.metric=?3");
+        List<PublishedResult> results = Util.castList(PublishedResult.class, q.getResultList());
+        return results;
+        
+    }
+    public List<PublishedResult> getPublishedResults(String modality,String organID,String metric) {
+        Query q = this.entityManager.createQuery("SELECT c FROM PublishedResult c WHERE c.modality=?1 and c.organname=?2 and c.metric=?3");
+        q.setHint("javax.persistence.cache.storeMode", "REFRESH");
+        q.setParameter(1, modality);
+        q.setParameter(2, organID);
+        q.setParameter(3, metric);
+
+        List<PublishedResult> results = Util.castList(PublishedResult.class, q.getResultList());
+        return results;
+        
+    }
+    
+    public PublishedResult checkExistingResults(String participant, Timestamp timestamp, String metric,String modality,String organID,String shortMetric,String cellValue) {
+        Query q = this.entityManager.createQuery("SELECT c FROM PublishedResult c Where c.prtcpnt=?1 and c.timestamp=?2 and c.organname=?3 and c.modality=?4");
         q.setHint("javax.persistence.cache.storeMode", "REFRESH");
         q.setParameter(1, participant);
         q.setParameter(2, timestamp);
-        q.setParameter(3, metric);
-
+        q.setParameter(3, organID);
+        q.setParameter(4, modality);
+        
         try {
             Object returnValue = q.getSingleResult();
             return (PublishedResult) returnValue;
@@ -718,19 +740,20 @@ public class VisceralEAO {
     public String publishResult(User participant, String modality, String region, int configuration, String shortMetric, String longMetric, String organID, Timestamp timestamp) {
         DecimalFormat df = new DecimalFormat("#.###");
         String cellValue = df.format(this.getSingleOrganResultAvg(participant.getUniqueid(), organID, modality, region, configuration, shortMetric, timestamp.toString()));
-        System.out.println(cellValue);
-        PublishedResult dbResponse = checkExistingResults(participant.getFirstname() + " " + participant.getLastname(), timestamp, longMetric);
+        PublishedResult dbResponse = checkExistingResults(participant.getFirstname() + " " + participant.getLastname(), timestamp, longMetric,modality,organID,shortMetric.toLowerCase(),cellValue);
         if (dbResponse == null) {
-            Query q = this.entityManager.createNativeQuery("INSERT INTO `regsystem_visceral`.`published_results` (`prtcpnt`, `affiliation`, `metric`, `organ" + organID + "`, `TIMESTAMP`) VALUES (?1, ?2, ?3, ?4, ?5);");
+            Query q = this.entityManager.createNativeQuery("INSERT INTO `regsystem_visceral`.`published_results` (`prtcpnt`, `affiliation`,`modality`, `"+shortMetric+"`, `organname`,`organvalue`, `TIMESTAMP`) VALUES (?1, ?2, ?3, ?4, ?5,?6,?7);");
             q.setParameter(1, participant.getFirstname() + " " + participant.getLastname());
             q.setParameter(2, participant.getAffiliation());
-            q.setParameter(3, longMetric);
+            q.setParameter(3, modality);
             q.setParameter(4, cellValue);
-            q.setParameter(5, timestamp.toString());
-
+            q.setParameter(5, organID);
+            q.setParameter(6, cellValue);
+            q.setParameter(7, timestamp.toString());
+            
             return q.executeUpdate() > 0 ? "success" : "failed";
         } else {
-            Query q = this.entityManager.createNativeQuery("UPDATE `regsystem_visceral`.`published_results` SET `organ" + organID + "`=?1 WHERE `id`=" + dbResponse.getId() + ";");
+            Query q = this.entityManager.createNativeQuery("UPDATE `regsystem_visceral`.`published_results` SET `"+shortMetric+"`=?1 WHERE `id`=" + dbResponse.getId() + ";");
             q.setParameter(1, cellValue);
             return q.executeUpdate() > 0 ? "success" : "failed";
         }

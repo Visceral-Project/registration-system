@@ -35,6 +35,7 @@ public class ResultsBean {
     private List<String> metrics = Arrays.asList("Dice Coefficient", "Jaccard Coefficient", "Area under ROC Curve", "Cohen Kappa", "Rand Index", "Adjusted Rand Index", "Interclass Correlation",
             "Volumetric Similarity Coefficient", "Mutual Information", "Hausdorff Distance", "Average Hausdorff Distance", "Mahanabolis Distance", "Variation of Information", "Global Consistency Error",
             "Probabilistic Distance", "Sensitivity", "Specificity", "Precision", "F-Measure", "Accuracy", "Fallout");
+    private List<String> metricsnew = Arrays.asList("Dice Coefficient", "Average Hausdorff Distance","Adjusted Rand Index","Interclass Correlation");
     private List<String> modalities;
     private List<Integer> configurations;
     private List<String> regions;
@@ -95,7 +96,7 @@ public class ResultsBean {
         boolean publishStatus = true;
 
         if (ts != null) {
-            for (String metric : this.metrics) {
+            for (String metric : this.metricsnew) {
                 if (service.publishResult(loggedUser, this.modality, this.region, this.configuration, getMetricShortName(metric), metric, this.organToPublish, ts) == "failed") {
                     publishStatus = false;
                 }
@@ -496,5 +497,19 @@ public class ResultsBean {
      */
     public void setOrganToPublish(String organToPublish) {
         this.organToPublish = organToPublish;
+    }
+
+    /**
+     * @return the metricsnew
+     */
+    public List<String> getMetricsnew() {
+        return metricsnew;
+    }
+
+    /**
+     * @param metricsnew the metricsnew to set
+     */
+    public void setMetricsnew(List<String> metricsnew) {
+        this.metricsnew = metricsnew;
     }
 }

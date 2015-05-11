@@ -29,6 +29,7 @@
                                     <tr>
                                         <th>Participant</th>
                                         <th>Affiliation</th>
+                                        <th>Modality</th>
                                         <th>Submission Timestamp</th>
                                         <th>Left Kidney</th>
                                         <th>Right Kidney</th>
@@ -59,6 +60,7 @@
                                             <tr class="vmManager">
                                                 <td><h:outputText value="#{result.prtcpnt}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{result.modality}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.timestamp}" styleClass="field">
                                                         <f:convertDateTime pattern="dd MMM yyyy HH:mm:ss" />
                                                     </h:outputText></td>
@@ -71,7 +73,7 @@
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ237)}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ40358)}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ40357)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ29193)}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ29139)}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ7578)}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ170)}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ32249)}" styleClass="field"></h:outputText></td>

@@ -20,9 +20,15 @@ public class PublishedResult implements Serializable {
 
 	private String affiliation;
 
+	private String modality;
+	
 	private String metric;
+	
+	private String organname;
+	
+	private float organvalue;
 
-	private float organ1247;
+	/**private float organ1247;
 
 	private float organ1302;
 
@@ -60,8 +66,16 @@ public class PublishedResult implements Serializable {
 
 	private float organ7578;
 
-	private float organ86;
-
+	private float organ86;**/
+	
+	private String dice;
+	
+	private String adjrind;
+	
+	private String iccorr;
+	
+	private String avgdist;
+	
 	private String prtcpnt;
 
 	@Column(name="TIMESTAMP")
@@ -85,7 +99,11 @@ public class PublishedResult implements Serializable {
 	public void setAffiliation(String affiliation) {
 		this.affiliation = affiliation;
 	}
-
+	
+	public String getModality() {
+        return this.modality;
+    }
+    
 	public String getMetric() {
 		return this.metric;
 	}
@@ -94,7 +112,7 @@ public class PublishedResult implements Serializable {
 		this.metric = metric;
 	}
 
-	public float getOrgan1247() {
+	/**public float getOrgan1247() {
 		return this.organ1247;
 	}
 
@@ -252,7 +270,7 @@ public class PublishedResult implements Serializable {
 
 	public void setOrgan86(float organ86) {
 		this.organ86 = organ86;
-	}
+	}**/
 
 	public String getPrtcpnt() {
 		return this.prtcpnt;
@@ -270,4 +288,90 @@ public class PublishedResult implements Serializable {
 		this.timestamp = timestamp;
 	}
 
+    /**
+     * @return the organname
+     */
+    public String getOrganname() {
+        return organname;
+    }
+
+    /**
+     * @param organname the organname to set
+     */
+    public void setOrganname(String organname) {
+        this.organname = organname;
+    }
+
+    /**
+     * @return the organvalue
+     */
+    public float getOrganvalue() {
+        return organvalue;
+    }
+
+    /**
+     * @param organvalue the organvalue to set
+     */
+    public void setOrganvalue(float organvalue) {
+        this.organvalue = organvalue;
+    }
+
+    /**
+     * @return the dice
+     */
+    public String getDice() {
+        return dice;
+    }
+
+    /**
+     * @param dice the dice to set
+     */
+    public void setDice(String dice) {
+        this.dice = dice;
+    }
+
+    /**
+     * @return the avgdist
+     */
+    public String getAvgdist() {
+        return avgdist;
+    }
+
+    /**
+     * @param avgdist the avgdist to set
+     */
+    public void setAvgdist(String avgdist) {
+        this.avgdist = avgdist;
+    }
+
+    /**
+     * @return the adjrind
+     */
+    public String getAdjrind() {
+        return adjrind;
+    }
+
+    /**
+     * @param adjrind the adjrind to set
+     */
+    public void setAdjrind(String adjrind) {
+        this.adjrind = adjrind;
+    }
+
+    /**
+     * @return the iccorr
+     */
+    public String getIccorr() {
+        return iccorr;
+    }
+
+    /**
+     * @param iccorr the iccorr to set
+     */
+    public void setIccorr(String iccorr) {
+        this.iccorr = iccorr;
+    }
+
+    
+    
 }
