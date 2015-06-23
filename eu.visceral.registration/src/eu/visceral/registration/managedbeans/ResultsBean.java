@@ -264,8 +264,8 @@ public class ResultsBean {
         case "Muscle Body Of Right Rectus Abdominis":
             organID = "40357";
             break;
-        case "Lumbar Verterbra 1":
-            organID = "29139";
+        case "Lumbar Vertebra 1":
+            organID = "29193";
             break;
         case "Thyroid":
             organID = "7578";

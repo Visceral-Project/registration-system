@@ -23,7 +23,7 @@ public class PublishedResultsBean {
     private String algorithm;
     private boolean showResultsTable = false;
     private List<String> modalities =Arrays.asList("CT", "CTce", "MRwb","MRT1cefs");
-    private List<String> organs =Arrays.asList("Left Kidney", "Right Kidney", "Left Lung","Right Lung","Spleen","Liver","Pancreas","Unirary Bladder","Muscle Body Of Left Rectus Abdominis","Muscle Body Of Right Rectus Abdominis","Lumbar Verterbra 1","Thyroid","Left Psoas Major Muscle","Right Psoas Major Muscle","Gallblader","Aorta","Sternum","Trachea","Left Adrenal Gland","Right Adrenal Gland");
+    private List<String> organs =Arrays.asList("Left Kidney", "Right Kidney", "Left Lung","Right Lung","Spleen","Liver","Pancreas","Unirary Bladder","Muscle Body Of Left Rectus Abdominis","Muscle Body Of Right Rectus Abdominis","Lumbar Vertebra 1","Thyroid","Left Psoas Major Muscle","Right Psoas Major Muscle","Gallblader","Aorta","Sternum","Trachea","Left Adrenal Gland","Right Adrenal Gland");
     private List<String> metrics = Arrays.asList("Dice Coefficient", "Hausdorff Distance", "Average Hausdorff Distance");
     
 
@@ -143,8 +143,8 @@ public class PublishedResultsBean {
         case "Muscle Body Of Right Rectus Abdominis":
             organID = "40357";
             break;
-        case "Lumbar Verterbra 1":
-            organID = "29139";
+        case "Lumbar Vertebra 1":
+            organID = "29193";
             break;
         case "Thyroid":
             organID = "7578";
@@ -212,8 +212,8 @@ public class PublishedResultsBean {
         case "40357":
             organName = "Muscle Body Of Right Rectus Abdominis";
             break;
-        case "29139":
-            organName = "Lumbar Verterbra 1";
+        case "29193":
+            organName = "Lumbar Vertebra 1";
             break;
         case "7578":
             organName = "Thyroid";

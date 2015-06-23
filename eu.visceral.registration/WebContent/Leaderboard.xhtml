@@ -44,7 +44,6 @@
                             <table class="table table-striped results">
                                 <thead>
                                     <tr>
-                                        <th>Participant</th>
                                         <th>Affiliation</th>
                                         <th>Modality</th>
                                         <th>Submission Timestamp</th>
@@ -58,8 +57,7 @@
                                     <h:form>
                                         <ui:repeat value="#{publishedResultsBean.publishedResults()}" var="result">
                                             <tr class="vmManager">
-                                                <td><h:outputText value="#{result.prtcpnt}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
+                                                 <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.modality}" styleClass="field"></h:outputText></td>
                                                 <td>
                                                     <h:outputText value="#{result.timestamp}" styleClass="field">
@@ -94,7 +92,6 @@
                             <table class="table table-striped results">
                                 <thead>
                                     <tr>
-                                        <th>Participant</th>
                                         <th>Affiliation</th>
                                         <th>Modality</th>
                                         <th>Submission Timestamp</th>
@@ -106,7 +103,6 @@
                                     <h:form>
                                         <ui:repeat value="#{publishedResultsBean.maxDices()}" var="result">
                                             <tr class="vmManager">
-                                                <td><h:outputText value="#{result.prtcpnt}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.modality}" styleClass="field"></h:outputText></td>
                                                 <td>
