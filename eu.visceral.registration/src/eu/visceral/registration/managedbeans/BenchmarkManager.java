@@ -82,7 +82,7 @@ public class BenchmarkManager {
     }
 
     public void changeCompetition() {
-        if (newStartDate != null && newEndDate != null) {
+        if (newEndDate != null) {
             if (newEndDate.compareTo(newStartDate) > 0) {
                 if (service.changeCompetition(this)) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Benchmark changed successfully", null));

@@ -8,8 +8,13 @@ import eu.visceral.registration.ejb.entity.PublishedResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 @SessionScoped()
 @ManagedBean
@@ -77,10 +82,31 @@ public class PublishedResultsBean {
                     response.add(result);
                 }
                 }catch(NullPointerException e){}
-            } 
+            } try{
+            Collections.sort(response, new Comparator<PublishedResult>() {
+                @Override public int compare(PublishedResult p1, PublishedResult p2) {
+                    if (Float.parseFloat(p1.getDice()) > Float.parseFloat(p2.getDice())) {
+                        return -1;
+                      }
+                      if (Float.parseFloat(p1.getDice()) < Float.parseFloat(p2.getDice())) {
+                        return 1;
+                      }
+                      return 0;
+                    
+                }
+            });
+            }catch(NumberFormatException e){};
         return response;
     }
-
+    
+    
+    public void deletePublishedResult(PublishedResult result) {
+        if (service.deletePublishedResult(result)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Result removed from the leaderboard", null));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to remove result. Please try again", null));
+        }
+    }
     /**
      * @return the metrics
      */

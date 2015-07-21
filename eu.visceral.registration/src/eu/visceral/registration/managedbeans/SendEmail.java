@@ -141,10 +141,12 @@ public class SendEmail {
     }
 
     public boolean sendNewVmRequest(User user) {
+        System.out.println(user.getPreferance());
         this.toEmails = new ArrayList<String>();
         this.toEmails.add("ivan.eggel@hevs.ch");
         this.toEmails.add("Roger.Schaer@hevs.ch");
         this.toEmails.add("Oscar.Jimenez@hevs.ch");
+
         this.mailSubject = "Visceral - VM assignment";
         this.mailContent = "<h3>Visceral Registration System</h3><div><p>The account with email <b>" + user.getEmail() + "</b> has registered in a new benchmark. Now you will need to assign a VM (<b>"
                 + user.getPreferance() + "</b>). You can do this from the administrator's <a href=\"http://visceral.eu:8080/register/Login.xhtml\">dashboard</a>.</p></div>";

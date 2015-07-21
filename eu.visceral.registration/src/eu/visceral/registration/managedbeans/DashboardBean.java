@@ -371,6 +371,7 @@ public class DashboardBean {
             admins.add(new Admin());
             // if (admins != null) {
             SendEmail mail = new SendEmail();
+            if(competition.getName()!="Detection2" && competition.getName()!="Retrieval2"){
             if (mail.sendPDFAgreement(getEmail(), admins)) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The signed PDF was sent. After account activation you will receive a confirmation Email.", null));
             } else {
@@ -379,6 +380,7 @@ public class DashboardBean {
             // }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please select the signed PDF", null));
+        }
         }
     }
 

@@ -510,7 +510,6 @@ public class VisceralEAO {
             return false;
         }
     }
-
     public boolean changeCompetition(BenchmarkManager bean) {
         Query q = this.entityManager.createQuery("UPDATE Competition bench SET bench.name=?1, bench.startdate =?2, bench.enddate=?3  WHERE bench.name=?4");
         q.setParameter(1, bean.getNewName());

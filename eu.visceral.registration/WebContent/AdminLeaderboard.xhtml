@@ -1,107 +1,129 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-    xmlns:t="http://myfaces.apache.org/tomahawk">
+    xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:p="http://primefaces.org/ui">
     <h:head>
         #{adminLeaderboardBean.init()}
         <link rel="shortcut icon" type="image/ico" href="/register/javax.faces.resource/favicon.ico?ln=images" />
         <h:outputStylesheet library="css" name="style.css" />
     </h:head>
-    <h:body styleClass="body">
-        <h:panelGrid columns="1" styleClass="container">
-            <t:div>
+   <h:body styleClass="body">
+    <h:panelGrid columns="1" styleClass="container">
+             <t:div>
                 <h:outputLink value="http://www.visceral.eu/">
                     <h:graphicImage library="images" name="visceral-logo.png" width="220" height="110" />
                 </h:outputLink>
                 <h1>Visceral Registration System</h1>
                 <h2>Segmentation Results LeaderBoard</h2>
-            </t:div>
-            <t:div styleClass="viewContent">
-                <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
-                <h:form style="display: table;margin: auto;margin-top: 10px;">
-                    <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
-                    <h:commandLink style="margin-left:5px;" value="Delete All Results" action="#{adminLeaderboardBean.deleteAllPublishedResults()}" styleClass="submit"></h:commandLink>
-                </h:form>
+             </t:div>
+     <t:div styleClass="viewContent">
+                     <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+     
+                <h:form>
+                        <h:panelGrid columns="1" style="margin: auto;">
+                            <h:outputLabel style="text-align:center;" value="Please Select"></h:outputLabel>
+                            <t:div>
+                                <h:panelGrid columns="4">
+                                    <h:selectOneMenu value="#{adminLeaderboardBean.modality}" required="true" requiredMessage="Please choose a modality">
+                                        <f:selectItem itemLabel="Modality" noSelectionOption="true" />
+                                        <f:selectItems value="#{adminLeaderboardBean.modalities}" var="modality" itemLabel="#{modality}" itemValue="#{modality}" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu value="#{adminLeaderboardBean.organ}" required="true" requiredMessage="Please choose a organ">
+                                        <f:selectItem itemLabel="Organ" noSelectionOption="true" />
+                                        <f:selectItems value="#{adminLeaderboardBean.organs}" var="organ" itemLabel="#{organ}" itemValue="#{organ}" />
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                            </t:div>
+                            <h:commandButton style="display: table;margin: auto;margin-top: 10px;" value="Get Results" action="#{adminLeaderboardBean.getResultsList()}" styleClass="submit"></h:commandButton>
+                        </h:panelGrid>
+                    </h:form>
+        <t:div rendered="#{adminLeaderboardBean.showResultsTable}">
                 <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
-                <ui:repeat var="metric" value="#{adminLeaderboardBean.metrics}">
                     <t:div>
                         <h:outputLabel style="width:100%;" styleClass="labelClass" value="#{metric}"></h:outputLabel>
-                        <h:outputLabel rendered="#{!adminLeaderboardBean.isMetricResults(metric)}" style="width:100%; color: #e74c3c;" styleClass="labelClass" value="No results available for #{metric}"></h:outputLabel>
-                        <t:div rendered="#{adminLeaderboardBean.isMetricResults(metric)}" styleClass="well">
+                        <t:div styleClass="well">
                             <table class="table table-striped results">
                                 <thead>
                                     <tr>
-                                        <th>Participant</th>
                                         <th>Affiliation</th>
                                         <th>Modality</th>
                                         <th>Submission Timestamp</th>
-                                        <th>Left Kidney</th>
-                                        <th>Right Kidney</th>
-                                        <th>Spleen</th>
-                                        <th>Liver</th>
-                                        <th>Left Lung</th>
-                                        <th>Right Lung</th>
-                                        <th>Unirary Bladder</th>
-                                        <th>Muscle Body Of Left Rectus Abdominis</th>
-                                        <th>Muscle Body Of Right Rectus Abdominis</th>
-                                        <th>Lumbar Vertebra 1</th>
-                                        <th>Thyroid</th>
-                                        <th>Pancreas</th>
-                                        <th>Left Psoas Major Muscle</th>
-                                        <th>Right Psoas Major Muscle</th>
-                                        <th>Gallblader</th>
-                                        <th>Aorta</th>
-                                        <th>Sternum</th>
-                                        <th>Trachea</th>
-                                        <th>Left Adrenal Gland</th>
-                                        <th>Right Adrenal Gland</th>
-                                        <th></th>
+                                        <th>DICE</th>
+                                        <th>MSD</th>
+                                        <th>ADJRIND</th>
+                                        <th>ICCORR</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <h:form>
-                                        <ui:repeat value="#{adminLeaderboardBean.publishedResults(metric)}" var="result">
+                                        <ui:repeat value="#{adminLeaderboardBean.publishedResults()}" var="result">
                                             <tr class="vmManager">
-                                                <td><h:outputText value="#{result.prtcpnt}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
+                                                 <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
                                                 <td><h:outputText value="#{result.modality}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{result.timestamp}" styleClass="field">
+                                                <td>
+                                                    <h:outputText value="#{result.timestamp}" styleClass="field">
                                                         <f:convertDateTime pattern="dd MMM yyyy HH:mm:ss" />
-                                                    </h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ29663)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ29662)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ86)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ58)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ1326)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ1302)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ237)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ40358)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ40357)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ29139)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ7578)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ170)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ32249)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ32248)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ187)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ2473)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ480)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ1247)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ30325)}" styleClass="field"></h:outputText></td>
-                                                <td><h:outputText value="#{adminLeaderboardBean.publishStatus(result.organ30324)}" styleClass="field"></h:outputText></td>
+                                                    </h:outputText>
+                                                </td>
+                                                <td><h:outputText value="#{result.dice}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{result.avgdist}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{result.adjrind}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{result.iccorr}" styleClass="field"></h:outputText></td>
                                                 <td class="unwrapable"><h:commandLink action="#{adminLeaderboardBean.deletePublishedResult(result)}" value="Delete" styleClass="submit"></h:commandLink></td>
+                                                
                                             </tr>
                                         </ui:repeat>
                                     </h:form>
                                 </tbody>
                             </table>
+                            
                         </t:div>
                     </t:div>
-                </ui:repeat>
+         </t:div>
+     </t:div>
+     
+     <t:div styleClass="viewContent">
+                     <h2>Maximum DICE per Organ</h2>
+     
+                
+        <t:div>
                 <t:div style="margin-top: 10px; border-top: 1px solid grey; border-top-style: outset;"></t:div>
-                <h:form style="display: table;margin: auto;margin-top: 10px;">
-                    <h:button value="Dashboard" outcome="goToAdminDashboard" styleClass="submit"></h:button>
-                    <h:commandLink style="margin-left:5px;" value="Delete All Results" action="#{adminLeaderboardBean.deleteAllPublishedResults()}" styleClass="submit"></h:commandLink>
-                </h:form>
-            </t:div>
-        </h:panelGrid>
-    </h:body>
+                    <t:div>
+                        <h:outputLabel style="width:100%;" styleClass="labelClass"></h:outputLabel>
+                        <t:div styleClass="well">
+                            <table class="table table-striped results">
+                                <thead>
+                                    <tr>
+                                        <th>Affiliation</th>
+                                        <th>Modality</th>
+                                        <th>Submission Timestamp</th>
+                                        <th>Organ Name</th>
+                                        <th>DICE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <h:form>
+                                        <ui:repeat value="#{adminLeaderboardBean.maxDices()}" var="result">
+                                            <tr class="vmManager">
+                                                <td><h:outputText value="#{result.affiliation}" styleClass="field"></h:outputText></td>
+                                                <td><h:outputText value="#{result.modality}" styleClass="field"></h:outputText></td>
+                                                <td>
+                                                    <h:outputText value="#{result.timestamp}" styleClass="field">
+                                                        <f:convertDateTime pattern="dd MMM yyyy HH:mm:ss" />
+                                                    </h:outputText>
+                                                </td>
+                                                <td><h:outputText value="#{adminLeaderboardBean.getName(result.organname)}" styleClass="field"></h:outputText></td>
+                                                
+                                                <td><h:outputText value="#{result.dice}" styleClass="field"></h:outputText></td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </h:form>
+                                </tbody>
+                            </table>
+                            
+                        </t:div>
+                    </t:div>
+         </t:div>
+     </t:div>
+    </h:panelGrid>
+   </h:body>
 </f:view>
